@@ -1,0 +1,133 @@
+%%{init: {'theme': 'neutral'}}%%
+erDiagram
+  USERS ||--o{ INTERACTIONS : owns
+  HEALTHCARE_PROFESSIONALS ||--o{ INTERACTIONS : receives
+  INTERACTIONS ||--o{ INTERACTION_PRODUCTS : has
+  PRODUCTS ||--o{ INTERACTION_PRODUCTS : linked
+  INTERACTIONS ||--o{ FOLLOW_UPS : spawns
+  USERS ||--o{ FOLLOW_UPS : assigned
+  USERS ||--o{ AUTH_REFRESH_TOKENS : has
+  USERS ||--o{ AUDIT_LOGS : acts
+  INTERACTIONS ||--o| AI_RUNS : enriched_by
+  USERS ||--o{ AI_RUNS : requests
+  HEALTHCARE_PROFESSIONALS ||--o{ AI_RUNS : contextualizes
+  AI_RUNS }o--o| INTERACTIONS : may_reference
+
+  USERS {
+    uuid id PK
+    varchar email UK
+    varchar password_hash
+    varchar full_name
+    user_role role
+    boolean is_active
+    timestamptz created_at
+    timestamptz updated_at
+  }
+
+  HEALTHCARE_PROFESSIONALS {
+    uuid id PK
+    varchar first_name
+    varchar last_name
+    varchar specialty
+    varchar institution
+    varchar city
+    varchar state
+    varchar country
+    varchar email
+    varchar phone
+    varchar registration_number UK
+    jsonb metadata
+    timestamptz created_at
+    timestamptz updated_at
+  }
+
+  PRODUCTS {
+    uuid id PK
+    varchar code UK
+    varchar name
+    varchar therapeutic_area
+    boolean is_active
+    timestamptz created_at
+    timestamptz updated_at
+  }
+
+  INTERACTIONS {
+    uuid id PK
+    uuid user_id FK
+    uuid hcp_id FK
+    uuid ai_run_id FK
+    timestamptz visit_at
+    visit_channel channel
+    text notes
+    text summary
+    interaction_sentiment sentiment
+    numeric sentiment_score
+    jsonb medical_topics
+    jsonb ai_raw_payload
+    interaction_status status
+    boolean is_deleted
+    timestamptz created_at
+    timestamptz updated_at
+  }
+
+  INTERACTION_PRODUCTS {
+    uuid id PK
+    uuid interaction_id FK
+    uuid product_id FK
+    numeric confidence
+    record_source source
+  }
+
+  FOLLOW_UPS {
+    uuid id PK
+    uuid interaction_id FK
+    uuid user_id FK
+    varchar title
+    text description
+    follow_up_priority priority
+    timestamptz due_at
+    follow_up_status status
+    record_source source
+    timestamptz created_at
+    timestamptz updated_at
+  }
+
+  AUTH_REFRESH_TOKENS {
+    uuid id PK
+    uuid user_id FK
+    varchar token_hash UK
+    timestamptz expires_at
+    timestamptz revoked_at
+    varchar user_agent
+    inet ip_address
+    timestamptz created_at
+  }
+
+  AUDIT_LOGS {
+    uuid id PK
+    uuid actor_user_id FK
+    varchar entity_type
+    uuid entity_id
+    varchar action
+    jsonb before_state
+    jsonb after_state
+    inet ip_address
+    uuid correlation_id
+    timestamptz created_at
+  }
+
+  AI_RUNS {
+    uuid id PK
+    uuid user_id FK
+    uuid hcp_id FK
+    uuid interaction_id FK
+    varchar graph_name
+    ai_run_status status
+    varchar model_name
+    int latency_ms
+    jsonb token_usage
+    text error_message
+    jsonb state_snapshot
+    timestamptz created_at
+    timestamptz finished_at
+  }

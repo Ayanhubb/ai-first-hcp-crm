@@ -1,0 +1,2 @@
+-- Seed placeholder: demo MR/admin users (hashed passwords only)
+-- Never seed production secrets. Populate during P4 polish phase.

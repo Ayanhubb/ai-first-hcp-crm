@@ -1,0 +1,2 @@
+-- Seed placeholder: products catalog
+-- Populate during P4 polish phase. See docs/database_design.md sample records.

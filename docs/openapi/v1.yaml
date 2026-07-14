@@ -1,0 +1,19 @@
+openapi: 3.1.0
+info:
+  title: AI-First HCP CRM API
+  version: 1.0.0
+  description: >
+    OpenAPI scaffold. Authoritative contracts are defined in docs/api_design.md.
+    Generate or expand from FastAPI once routers are implemented.
+servers:
+  - url: http://localhost:8000
+    description: development
+paths: {}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []

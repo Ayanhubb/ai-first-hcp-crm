@@ -1,0 +1,56 @@
+# Environment & secrets
+.env
+.env.*
+!.env.example
+!config/.env.example
+!config/*.env.example
+config/local.env
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.tox/
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/build/
+*.tsbuildinfo
+.npm
+.eslintcache
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Docker / logs
+*.log
+docker/pgdata/
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+
+# Local overrides
+docker-compose.override.yml
